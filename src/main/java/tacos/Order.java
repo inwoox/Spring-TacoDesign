@@ -1,5 +1,7 @@
 package tacos;
 
+import java.util.Date;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -7,6 +9,9 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 public class Order {
+	
+	private Long id;
+	private Date placedAt;
 	
 	@NotBlank(message="Name is Required")
 	private String deliveryName;
@@ -30,6 +35,18 @@ public class Order {
 	
 	
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Date getPlacedAt() {
+		return placedAt;
+	}
+	public void setPlacedAt(Date placedAt) {
+		this.placedAt = placedAt;
+	}
 	public String getDeliveryName() {
 		return deliveryName;
 	}
