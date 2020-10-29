@@ -32,7 +32,7 @@ create table if not exists Taco_Order(
 	pracedAt timestamp not null
 );
 
-create table if exists Taco_Order_Tacos(
+create table if not exists Taco_Order_Tacos(
 	tacoOrder bigint not null,
 	taco bigint not null
 );
