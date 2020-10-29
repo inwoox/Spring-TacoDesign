@@ -21,6 +21,7 @@ import tacos.Ingredient;
 import tacos.Ingredient.Type;
 import tacos.Taco;
 import tacos.data.IngredientRepository;
+import tacos.data.TacoRepository;
 
 @Controller
 @RequestMapping("/design")
@@ -29,10 +30,12 @@ public class DesignTacoController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private final IngredientRepository ingredientRepo;
+	private TacoRepository tacoRepo;
 	
 	@Autowired  // 기존에 만들어 둔 IngredientRepository 인터페이스를 주입 (구현체 클래스까지 만들고나서 , 인터페이스를 주입한다)
-	public DesignTacoController(IngredientRepository ingredientRepo) {
+	public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo) {
 		this.ingredientRepo = ingredientRepo;
+		this.tacoRepo = tacoRepo;
 	}
 	
 	@GetMapping
