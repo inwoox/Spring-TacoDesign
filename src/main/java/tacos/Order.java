@@ -39,7 +39,9 @@ public class Order {
 		this.tacos.add(design);
 	}
 	
-	
+	public List<Taco> getTacos(){
+		return tacos;
+	}
 	
 	public Long getId() {
 		return id;
