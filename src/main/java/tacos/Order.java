@@ -1,9 +1,17 @@
 package tacos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -11,8 +19,14 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 
-public class Order {
+@Entity
+@Table(name="Taco_Order")  // 이 annotation을 지정하지 않으면, JPA가 Order라는 이름의 테이블로 Order 객체를 저장. 그러나 Order는 예약어이므로 문제 발생.
+public class Order implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	@NotBlank(message="Name is Required")
@@ -35,7 +49,13 @@ public class Order {
 	
 	private Date placedAt;
 	
+	@ManyToMany(targetEntity=Taco.class)
 	private List<Taco> tacos = new ArrayList<>();
+	
+	@PrePersist
+	void placedAt() {
+		this.placedAt = new Date();
+	}
 	
 	public void addDesign(Taco design) {
 		this.tacos.add(design);

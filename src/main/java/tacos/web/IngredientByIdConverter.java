@@ -1,5 +1,7 @@
 package tacos.web;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,7 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
 	
 	@Override  // 이런 타입 변환이 필요할 때 convert 메서드가 자동 호출 / String 타입의 식자재 ID를 사용해 , DB에 저장된 식자재 데이터를 읽어 Ingredient 객체로 변환하기 위해 사용된다.
 	public Ingredient convert(String id) {
-		return ingredientRepo.findById(id);
+		Optional<Ingredient> optionalIngredient = ingredientRepo.findById(id);  // JPA에서 식자재를 찾지 못했을 때 null이 반환될 수 있어, 안전한 처리를 위해..
+		return optionalIngredient.isPresent() ? optionalIngredient.get() : null;
 	}
 }
