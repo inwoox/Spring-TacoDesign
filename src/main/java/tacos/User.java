@@ -27,13 +27,12 @@ public class User implements UserDetails {          // JDBC 기반 인증을 사
 	private final String city;
 	private final String state;
 	private final String zip;
-	private final String phoneNumber;
+	private final String phone;
 	
 	
-	public User(Long id, String username, String password, String fullname, String street, String city, String state,
-			String zip, String phoneNumber) {
+	public User(String username, String password, String fullname, String street, String city, String state,
+			String zip, String phone) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.fullname = fullname;
@@ -41,7 +40,7 @@ public class User implements UserDetails {          // JDBC 기반 인증을 사
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
-		this.phoneNumber = phoneNumber;
+		this.phone = phone;
 	}
 
 	@Override
@@ -105,8 +104,8 @@ public class User implements UserDetails {          // JDBC 기반 인증을 사
 		return zip;
 	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getPhone() {
+		return phone;
 	}
 
 	public void setId(Long id) {
