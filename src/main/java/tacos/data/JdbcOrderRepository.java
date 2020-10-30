@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -20,6 +22,8 @@ public class JdbcOrderRepository implements OrderRepository {
 		private SimpleJdbcInsert orderInserter;
 		private SimpleJdbcInsert orderTacoInserter;
 		private ObjectMapper objectMapper;
+		
+		Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 		@Autowired // JdbcTemplate 주입 , 인스턴스 변수에 직접 주입하는 대신 JdbcTemplate을 사용해서 두 개의 SimpleJdbcInsert 인스턴스를 생
 		public JdbcOrderRepository(JdbcTemplate jdbc) {

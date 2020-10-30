@@ -7,13 +7,13 @@ import java.util.List;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 public class Order {
 	
 	private Long id;
-	private Date placedAt;
 	
 	@NotBlank(message="Name is Required")
 	private String deliveryName;
@@ -21,6 +21,7 @@ public class Order {
 	private String deliveryStreet;
 	@NotBlank(message="City is Required")
 	private String deliveryCity;
+	@Size(max=2,message="2 down")
 	@NotBlank(message="State is Required")
 	private String deliveryState;
 	@NotBlank(message="Zip is Required")
@@ -32,6 +33,7 @@ public class Order {
 	@Digits(integer=3, fraction=0, message="Invalid CVV")
 	private String ccCVV;
 	
+	private Date placedAt;
 	
 	private List<Taco> tacos = new ArrayList<>();
 	
