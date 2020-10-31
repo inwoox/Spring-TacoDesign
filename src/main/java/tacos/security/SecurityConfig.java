@@ -22,13 +22,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {       // 경로 접근 제어 (HTTP 보안을 구성하는 메서드)
 		
-		http.authorizeRequests()
-		.antMatchers("/design", "/orders").access("hasRole('ROLE_USER')")			// 이 메서드는 ExpressionInterceptUrlRegistry 객체를 반환
+		http.authorizeRequests()																							// 이 메서드는 ExpressionInterceptUrlRegistry 객체를 반환
+		.antMatchers("/design", "/orders")
+			.access("hasRole('ROLE_USER')")			
 		.antMatchers("/", "/**").access("permitAll")												  // access의 인자로 SpEL (스프링 표현식 언어) 를 사용할 수 있다. 
 		.and().formLogin().loginPage("/login")																// 로그인이 필요할 경우 이 경로로 리다이렉트
 		.and().logout().logoutSuccessUrl("/")
-		.and().csrf();
-		
+		.and().csrf().disable();																							// h2-console 접근을 위한 csrf 토큰 해제
+		http.headers().frameOptions().disable();
 		//.defaultSuccessUrl("/design", true)                                 // 두번째 인자로 true를 전달하면, 로그인 전에 어떤 페이지였든 design 페이지로 이동
 	}
 	
