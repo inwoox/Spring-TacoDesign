@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
@@ -48,6 +49,9 @@ public class Order implements Serializable {
 	private String ccCVV;
 	
 	private Date placedAt;
+	
+	@ManyToOne          // 한명의 사용자 - 여러 주문 / 하나의 주문은 하나의 사용자에 속한다.
+	private User user;
 	
 	@ManyToMany(targetEntity=Taco.class)
 	private List<Taco> tacos = new ArrayList<>();
@@ -125,5 +129,15 @@ public class Order implements Serializable {
 	public void setCcCVV(String ccCVV) {
 		this.ccCVV = ccCVV;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 	
 }

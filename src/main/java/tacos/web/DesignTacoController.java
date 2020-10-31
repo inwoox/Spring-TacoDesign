@@ -1,6 +1,7 @@
 package tacos.web;
 
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +24,10 @@ import tacos.Ingredient;
 import tacos.Ingredient.Type;
 import tacos.Order;
 import tacos.Taco;
+import tacos.User;
 import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
+import tacos.data.UserRepository;
 
 @Controller
 @RequestMapping("/design")
@@ -35,6 +38,7 @@ public class DesignTacoController {
 	
 	private final IngredientRepository ingredientRepo;
 	private TacoRepository tacoRepo;
+	private UserRepository userRepo;
 	
 	@ModelAttribute(name = "order")  // order 객체가 모델에 생성되도록 해준다.
 	public Order order() {
@@ -48,13 +52,14 @@ public class DesignTacoController {
 	
 	
 	@Autowired  // 기존에 만들어 둔 IngredientRepository 인터페이스를 주입 (구현체 클래스까지 만들고나서 , 인터페이스를 주입한다)
-	public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo) {
+	public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo, UserRepository userRepo) {
 		this.ingredientRepo = ingredientRepo;
 		this.tacoRepo = tacoRepo;
+		this.userRepo = userRepo;
 	}
 	
 	@GetMapping
-	public String showDesignForm(Model model) {
+	public String showDesignForm(Model model, Principal principal) {
 		List<Ingredient> ingredients = new ArrayList<>();
 		ingredientRepo.findAll().forEach(i -> ingredients.add(i));   // 하드코딩하여 데이터를 넣는대신 DB에서 읽어온다. 
 		
@@ -63,7 +68,9 @@ public class DesignTacoController {
 			model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
 		}
 		
-		model.addAttribute("taco", new Taco());
+		String username = principal.getName();
+		User user = userRepo.findByUsername(username);  // 인증된 사용자를 가져와서 model에 저장
+		model.addAttribute("user", user);
 		
 		return "design";
 	}

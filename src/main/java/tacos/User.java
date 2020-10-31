@@ -20,15 +20,18 @@ public class User implements UserDetails {          // JDBC 기반 인증을 사
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	private final String username;
-	private final String password;
-	private final String fullname;
-	private final String street;
-	private final String city;
-	private final String state;
-	private final String zip;
-	private final String phone;
+	private String username;
+	private String password;
+	private String fullname;
+	private String street;
+	private String city;
+	private String state;
+	private String zip;
+	private String phone;
 	
+	public User() {
+		
+	}
 	
 	public User(String username, String password, String fullname, String street, String city, String state,
 			String zip, String phone) {
@@ -111,6 +114,41 @@ public class User implements UserDetails {          // JDBC 기반 인증을 사
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	
+	
+	
+
 	
 }
