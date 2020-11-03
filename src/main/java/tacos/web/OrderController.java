@@ -4,8 +4,11 @@ package tacos.web;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,11 +27,14 @@ import tacos.data.OrderRepository;
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("order")
-public class OrderController {
+public class OrderController {              
 	
+	private OrderProps props;
 	private OrderRepository orderRepo; 
-	public OrderController(OrderRepository orderRepo) {  // 리포지토리 주입
+	
+	public OrderController(OrderRepository orderRepo , OrderProps props) {  // 리포지토리 주입
 		this.orderRepo = orderRepo;
+		this.props = props;
 	}
 	
 	@GetMapping("/current")   // 인증된 사용자 user 객체를 메서드 인자로 받아, 사용자 정보를 Order 객체의 각 속성에 설정한다. (주문 폼 미리 채우기)
@@ -64,5 +70,14 @@ public class OrderController {
 		sessionStatus.setComplete();      // 이전 주문 및 연관 타코가 세션에 남아있을 수 있기 때문에 , 세션을 재설정
 		
 		return "redirect:/";
+	}
+	 
+	@GetMapping
+	public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
+		
+		//페이지 크기가 20인 (최근 주문 중 20개까지) 첫번째 페이지 (0)를 요청하기 위해 Pageable 객체를 생성
+		Pageable pageable = PageRequest.of(0, props.getPageSize());  
+		model.addAttribute("orders", orderRepo.findByUserOrderByPlacedAtDesc(user,pageable));
+		return "orderList";
 	}
 }

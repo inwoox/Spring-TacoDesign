@@ -86,6 +86,12 @@
 			<artifactId>lombok</artifactId>
       <scope>provided</scope>
 		</dependency>
+		
+		<dependency>		<!-- @ConfigurationProperties 애노테이션이 지정된 클래스에 관한 메타데이터를 생성하는 애노테이션 처리기 / 그 다음 META-INF 아래 additional-.. json 생성 -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>

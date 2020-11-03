@@ -1,8 +1,12 @@
 package tacos.data;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 import tacos.Order;
+import tacos.User;
 
 public interface OrderRepository extends CrudRepository<Order, Long> {  
 	// JPA는 JDBC와 달리, 실행시 인터페이스 구현체(클래스)를 자동으로 생성해준다. (JdbcOrderRepository 같은 인터페이스 구현체 클래스를 만들 필요가 없다)
@@ -13,4 +17,6 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 	
 	// @Query("select.... ") - 복잡한 쿼리의 경우, 이런 형태로 메서드에 쿼리를 매핑할 수 있다.
 	//List<Order> findByDeliveryZip(String deliveryZip);
+	
+	List<Order> findByUserOrderByPlacedAtDesc(User user, Pageable pageable);
 }
