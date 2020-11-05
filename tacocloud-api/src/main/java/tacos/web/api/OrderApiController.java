@@ -36,8 +36,8 @@ public class OrderApiController {
 	// 주문 데이터 (전체 속성만) 저장
 	@PutMapping("/{orderId}")
 	public Order putOrder(@RequestBody Order order) {  // 요청 몸체의 데이터가 order에 바인딩 된다.
-		return orderRepo.save(order);										 // 해당 주문의 속성이 생략되면, 생략된 속성의 값은 null이 되므로, 일부 데이터만 변경하더라도, 전체 데이터를 제출해야한다.
-	}																									 // 그래서 일부 데이터만 변경시에는 PATCH 요청을 사용한다.
+		return orderRepo.save(order);				   // 해당 주문의 속성이 생략되면, 생략된 속성의 값은 null이 되므로, 일부 데이터만 변경하더라도, 전체 데이터를 제출해야한다.
+	}												   // 그래서 일부 데이터만 변경시에는 PATCH 요청을 사용한다.
 	
 	// 주문 데이터 (일부 속성 가능) 저장
 	@PatchMapping(path="/{orderId}", consumes="application/json") // Patch는 부분 변경의 의미를 내포하고 있다.

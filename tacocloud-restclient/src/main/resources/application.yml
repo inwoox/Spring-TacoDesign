@@ -1,0 +1,5 @@
+
+
+spring:             # 이 모듈이 웹 애플리케이션이 아니라는 것을 알린다.
+  main:
+    web-application-type: none

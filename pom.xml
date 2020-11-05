@@ -4,9 +4,9 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<modelVersion>4.0.0</modelVersion>
 
-		<groupId>sia</groupId>
+		<groupId>sia</groupId>				<!--  하부에 모듈 들도 동일한 스냅샷 버전을 설정해야한다  -->
 		<artifactId>taco-cloud-parent</artifactId>
-		<version>0.0.6-SNAPSHOT</version>
+		<version>0.0.7-SNAPSHOT</version>   <!--  임의로 지정하는 빌드 버전  -->
 		<packaging>pom</packaging>
 
 		<parent>
@@ -23,10 +23,11 @@
 		</properties>
 
 		<modules>
-				<module>tacos</module>
+				<module>tacocloud-main</module>
 				<module>tacocloud-api</module>
 				<module>tacocloud-data</module>
 				<module>tacocloud-domain</module>
+				<module>tacocloud-restclient</module>
 				<module>tacocloud-security</module>
 				<module>tacocloud-web</module>
 				<module>tacocloud-ui</module>
