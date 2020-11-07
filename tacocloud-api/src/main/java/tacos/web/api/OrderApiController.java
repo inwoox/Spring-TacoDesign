@@ -32,11 +32,11 @@ import tacos.messaging.OrderMessagingService;
 public class OrderApiController {              
 	
 	private OrderRepository orderRepo;
-	private OrderMessagingService orderMessages;
+	//private OrderMessagingService orderMessages;
 	
-	public OrderApiController(OrderRepository orderRepo, OrderMessagingService orderMessages) {
+	public OrderApiController(OrderRepository orderRepo) {
 		this.orderRepo = orderRepo;
-		this.orderMessages = orderMessages;
+		//this.orderMessages = orderMessages;
 	}
 	
 	// 리포지토리에서 모든 주문 가져오기
@@ -49,7 +49,7 @@ public class OrderApiController {
 	@PostMapping(consumes="application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Order postOrder(@RequestBody Order order) {
-	  orderMessages.sendOrder(order);  // 메시징으로 통신
+	  //orderMessages.sendOrder(order);  // 메시징으로 통신
 	  return orderRepo.save(order);
 	}
 	
