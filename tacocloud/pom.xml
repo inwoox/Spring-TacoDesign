@@ -3,16 +3,16 @@
           http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>tacocloud-main</artifactId>
+	<artifactId>tacocloud</artifactId>
 	<packaging>jar</packaging>
 
-	<name>tacocloud-main</name>
+	<name>tacocloud</name>
 	<description>Taco Cloud Example</description>
 
 	<parent>
 		<groupId>sia</groupId>
   		<artifactId>taco-cloud-parent</artifactId>
-		<version>0.0.7-SNAPSHOT</version>
+		<version>0.0.8-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -22,6 +22,7 @@
 
 	<dependencies>
 		<!-- TacoCloud dependencies -->
+		<!-- 각각 모듈로 나누고, 부모 모듈 POM에서 각 모듈을 포함시킨 다음, 이렇게 참조만 하면 가져다 쓸 수 있다 -->
 		<dependency>
 			<groupId>sia</groupId>
 			<artifactId>tacocloud-data</artifactId>

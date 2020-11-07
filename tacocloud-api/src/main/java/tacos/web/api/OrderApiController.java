@@ -5,6 +5,8 @@ package tacos.web.api;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tacos.Order;
 import tacos.data.OrderRepository;
+import tacos.messaging.OrderMessagingService;
 
 
 //@Slf4j
@@ -29,8 +32,25 @@ import tacos.data.OrderRepository;
 public class OrderApiController {              
 	
 	private OrderRepository orderRepo;
-	public OrderApiController(OrderRepository orderRepo) {
+	private OrderMessagingService orderMessages;
+	
+	public OrderApiController(OrderRepository orderRepo, OrderMessagingService orderMessages) {
 		this.orderRepo = orderRepo;
+		this.orderMessages = orderMessages;
+	}
+	
+	// 리포지토리에서 모든 주문 가져오기
+	@GetMapping(produces="application/json")
+	  public Iterable<Order> allOrders() {
+	    return orderRepo.findAll();
+	  }
+	
+	// 리포지토리에 주문 저장하기
+	@PostMapping(consumes="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Order postOrder(@RequestBody Order order) {
+	  orderMessages.sendOrder(order);  // 메시징으로 통신
+	  return orderRepo.save(order);
 	}
 	
 	// 주문 데이터 (전체 속성만) 저장

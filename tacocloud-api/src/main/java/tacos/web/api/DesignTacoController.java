@@ -41,22 +41,28 @@ public class DesignTacoController {		 // 이 애노테이션으로 CORS (Cross-O
 	}
 
 	// 가장 최근에 생성된 12개의 타코 리스트 반환
-	@SuppressWarnings("deprecation")
 	@GetMapping("/recent")
-	public ResponseEntity<CollectionModel<TacoModel>> recentTacos(){
-		PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());  // 오름차순 - 올라간다 - 오래된 것부터 / 내림차순 - 내려간다 - 최신 것부터
-		List<Taco> tacos = tacoRepo.findAll(page).getContent();
-		
-		List<TacoModel> tacoModels = new TacoModelAssembler().toModels(tacos);
-		
-		// resources 객체를 반환하기 전에 링크를 추가하여, 반환되는 리소스에 링크가 포함되도록 한다.
-		// 이렇게하면 이 경로에 대한 GET 요청은 각각 self 링크를 가지는 타코들과, 이 타코들이 포함된 리스트 자체의 recents 링크를 가지는 타코 리스트를 생성한다.
-		CollectionModel<TacoModel> recentModels = new CollectionModel<TacoModel>(tacoModels);
-		recentModels.add(linkTo(methodOn(DesignTacoController.class).recentTacos()).withRel("recents"));
-		return new ResponseEntity<>(recentModels, HttpStatus.OK);							
-		
-		// recentResources.add("http://localhost:8080/design/recent", "recents");  // 하드코딩
+    public Iterable<Taco> recentTacos() {                
+      PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());    // 오름차순 - 올라간다 - 오래된 것부터 / 내림차순 - 내려간다 - 최신 것부터
+      return tacoRepo.findAll(page).getContent();
 	}
+	
+//	@SuppressWarnings("deprecation")
+//	@GetMapping("/recent")
+//	public ResponseEntity<CollectionModel<TacoModel>> recentTacos(){
+//		PageRequest page = PageRequest.of(0, 12, Sort.by("createdAt").descending());  // 오름차순 - 올라간다 - 오래된 것부터 / 내림차순 - 내려간다 - 최신 것부터
+//		List<Taco> tacos = tacoRepo.findAll(page).getContent();
+//		
+//		List<TacoModel> tacoModels = new TacoModelAssembler().toModels(tacos);
+//		
+//		// resources 객체를 반환하기 전에 링크를 추가하여, 반환되는 리소스에 링크가 포함되도록 한다.
+//		// 이렇게하면 이 경로에 대한 GET 요청은 각각 self 링크를 가지는 타코들과, 이 타코들이 포함된 리스트 자체의 recents 링크를 가지는 타코 리스트를 생성한다.
+//		CollectionModel<TacoModel> recentModels = new CollectionModel<TacoModel>(tacoModels);
+//		recentModels.add(linkTo(methodOn(DesignTacoController.class).recentTacos()).withRel("recents"));
+//		return new ResponseEntity<>(recentModels, HttpStatus.OK);							
+//		
+//		// recentResources.add("http://localhost:8080/design/recent", "recents");  // 하드코딩
+//	}
 	
 	// 요청한 URL (타코 ID) 에 맞는 타코 검색
 	@GetMapping("/{id}")            // design/{id} 경로의 get 요청을 처리한다.

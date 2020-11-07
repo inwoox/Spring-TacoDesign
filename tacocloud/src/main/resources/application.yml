@@ -12,7 +12,7 @@ spring:
   datasource:
     url: jdbc:h2:mem:testdb
     username: admin
-    password: pass
+    password: password
 
 logging:            # 로깅 구성을 제어할 때는 classpath의 루트(src/main/resources)에 logback.xml 파일을 생성할 수 있지만 , 스프링부트의 구성 속성을 사용하면 필요 없다.
   file:
@@ -37,7 +37,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/tacocloud
     username: admin
-    password: pass
+    password: password
  
 logging:
   file:

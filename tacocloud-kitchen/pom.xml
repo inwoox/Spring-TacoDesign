@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>sia</groupId>
   		<artifactId>taco-cloud-parent</artifactId>
-		<version>0.0.7-SNAPSHOT</version>
+		<version>0.0.8-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -24,11 +24,11 @@
 	<dependencies>
 		<!-- Necessary Boot starters -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-artemis</artifactId>
+			<groupId>org.springframework.boot</groupId> 			<!--  ActiveMQ를 새롭게 다시 구현한 차세대 브로커, 어떤 브로커를 선택하든 메시지 송수신 코드 작성은 동일하며, -->
+			<artifactId>spring-boot-starter-artemis</artifactId>    <!--  브로커에 대한 연결을 생성하기 위해 스프링을 구성하는 방법만 다르다. -->
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<groupId>org.springframework.boot</groupId>				<!--  AMQP의 가장 중요한 구현이라고 할 수 있는 RabbitMQ -->
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 		<dependency>

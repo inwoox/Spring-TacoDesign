@@ -4,11 +4,11 @@
           http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>tacocloud-messaging-jms</artifactId>
+	<artifactId>tacocloud-messaging-kafka</artifactId>
 	<packaging>jar</packaging>
 
-	<name>tacocloud-messaging-jms</name>
-	<description>Taco Cloud Messaging (JMS)</description>
+	<name>tacocloud-messaging-kafka</name>
+	<description>Taco Cloud Messaging (Kafka)</description>
 
 	<parent>
 		<groupId>sia</groupId>
@@ -31,8 +31,8 @@
 
 		<!-- Necessary Boot starters -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-artemis</artifactId>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
 		</dependency>
 
 		<!-- Lombok -->

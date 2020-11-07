@@ -6,7 +6,7 @@
 
 		<groupId>sia</groupId>				<!--  하부에 모듈 들도 동일한 스냅샷 버전을 설정해야한다  -->
 		<artifactId>taco-cloud-parent</artifactId>
-		<version>0.0.7-SNAPSHOT</version>   <!--  임의로 지정하는 빌드 버전  -->
+		<version>0.0.8-SNAPSHOT</version>   <!--  임의로 지정하는 빌드 버전  -->
 		<packaging>pom</packaging>
 
 		<parent>
@@ -23,7 +23,7 @@
 		</properties>
 
 		<modules>
-				<module>tacocloud-main</module>
+				<module>tacocloud</module>
 				<module>tacocloud-api</module>
 				<module>tacocloud-data</module>
 				<module>tacocloud-domain</module>
@@ -32,6 +32,9 @@
 				<module>tacocloud-web</module>
 				<module>tacocloud-ui</module>
 				<module>tacocloud-kitchen</module>
+				<module>tacocloud-messaging-jms</module>
+				<module>tacocloud-messaging-rabbitmq</module>
+				<module>tacocloud-messaging-kafka</module>
 		</modules>
 
 </project>

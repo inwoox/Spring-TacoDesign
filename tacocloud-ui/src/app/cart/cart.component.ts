@@ -14,6 +14,7 @@ export class CartComponent implements OnInit {
   model = {
     deliveryName: '',
     deliveryStreet: '',
+    deliveryCity: '',
     deliveryState: '',
     deliveryZip: '',
     ccNumber: '',

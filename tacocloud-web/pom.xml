@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>sia</groupId>
   		<artifactId>taco-cloud-parent</artifactId>
-		<version>0.0.7-SNAPSHOT</version>   <!--  임의로 지정하는 빌드 버전 -->
+		<version>0.0.8-SNAPSHOT</version>   <!--  임의로 지정하는 빌드 버전 -->
 	</parent>
 
 	<properties>

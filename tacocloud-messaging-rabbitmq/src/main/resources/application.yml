@@ -1,0 +1,6 @@
+
+spring:
+  rabbitmq:
+    template:
+      exchange: tacocloud.orders     # 기본 거래소 (큐)
+      routing-key: kitchens.central  # 라우팅 키 
