@@ -35,6 +35,7 @@
 				<module>tacocloud-messaging-jms</module>
 				<module>tacocloud-messaging-rabbitmq</module>
 				<module>tacocloud-messaging-kafka</module>
+				<module>tacocloud-email</module>
 		</modules>
 
 </project>

@@ -16,10 +16,11 @@ public class RegistrationForm { // 폼에서 제출된 데이터를 담는 클�
 		private String state;
 		private String zip;
 		private String phone;
+		private String email;
 		
 	
 		// 폼에서 제출된 데이터를 가지고 , User 객체를 만드는 메서드
 		public User toUser(PasswordEncoder passwordEncoder) {
-			return new User(username, passwordEncoder.encode(password),fullname,street,city,state,zip,phone);
+			return new User(username, passwordEncoder.encode(password),fullname,street,city,state,zip,phone,email);
 		}
 }

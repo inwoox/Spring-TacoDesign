@@ -1,18 +1,15 @@
 package sia5;
 
-import java.awt.List;
 import java.io.File;
-import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.annotation.Transformer;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.integration.dsl.channel.MessageChannels;
+import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.file.FileWritingMessageHandler;
 import org.springframework.integration.file.dsl.Files;
 import org.springframework.integration.file.support.FileExistsMode;
@@ -40,7 +37,7 @@ public class FileWriterIntegrationConfig {
 	
 	//메시지 핸들러는 , 메시지 페이로드를 지정된 디렉터리의 파일에 쓴다. 이때 파일 이름은, 해당 메시지의 file_name 헤더에 지정된 것을 사용한다.
 	public FileWritingMessageHandler fileWriter() {
-		FileWritingMessageHandler handler = new FileWritingMessageHandler(new File("/tmp/sia5/files"));
+		FileWritingMessageHandler handler = new FileWritingMessageHandler(new File("/tmp/sia5/files"));  // 절대 경로
 		handler.setExpectReply(false); // 이 메서드는 서비스에서 응답 채널(플로우의 업스트림 컴포넌트로 값이 반환될 수 있는 채널)을 사용하지 않음을 나타낸다.
 		handler.setFileExistsMode(FileExistsMode.APPEND);
 		handler.setAppendNewLine(true);

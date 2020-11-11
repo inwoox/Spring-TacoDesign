@@ -1,0 +1,19 @@
+
+
+# 독립 실행형의 스프링 통합 플로우는, 스프링 MVC 또는 자동 구성이 제공하는 톰캣이 필요 없기 때문에,
+# 스프링 MVC 자동 구성을 비활성화한다.
+spring:
+  main:
+    web-application-type: none
+
+tacocloud:
+  api:
+    url: http://localhost:8080/orders/fromEmail
+    
+# 이 수신 서버 정보들을 가지고, 이메일 서버에 연결하고 이메일을 확인한다.
+  email:
+   host: imap.mail.me.com
+   mailbox: INBOX
+   username: 
+   password: 
+   poll-rate: 10000

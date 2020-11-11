@@ -1,15 +1,13 @@
 package tacos.web.api;
 
-
-
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tacos.Order;
 import tacos.data.OrderRepository;
 import tacos.messaging.OrderMessagingService;
+
 
 
 //@Slf4j
@@ -32,11 +31,14 @@ import tacos.messaging.OrderMessagingService;
 public class OrderApiController {              
 	
 	private OrderRepository orderRepo;
-	//private OrderMessagingService orderMessages;
+	private OrderMessagingService orderMessages;
+	private EmailOrderService emailOrderService;
 	
-	public OrderApiController(OrderRepository orderRepo) {
-		this.orderRepo = orderRepo;
-		//this.orderMessages = orderMessages;
+	public OrderApiController(OrderRepository repo, OrderMessagingService orderMessages, EmailOrderService emailOrderService) 
+	{
+		this.orderRepo = repo;
+		this.orderMessages = orderMessages;
+		this.emailOrderService = emailOrderService;
 	}
 	
 	// 리포지토리에서 모든 주문 가져오기
@@ -52,6 +54,16 @@ public class OrderApiController {
 	  //orderMessages.sendOrder(order);  // 메시징으로 통신
 	  return orderRepo.save(order);
 	}
+	
+	// 이메일 주문을 Order로 파싱하여 저장
+	@PostMapping(path="fromEmail", consumes="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Order postOrderFromEmail(@RequestBody EmailOrder emailOrder) {
+	  Order order = emailOrderService.convertEmailOrderToDomainOrder(emailOrder);
+	  orderMessages.sendOrder(order);
+	  return orderRepo.save(order);
+	}
+	
 	
 	// 주문 데이터 (전체 속성만) 저장
 	@PutMapping("/{orderId}")
