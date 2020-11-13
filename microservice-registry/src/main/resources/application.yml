@@ -13,7 +13,7 @@ eureka:
     fetchRegistry: false       # 다른 유레카 서버에서 레지스트리 정보를 가져오는지 여부 (기본값은 true)
     registerWithEureka: false  # 다른 유레카 서버의 서비스로 자신을 등록해야하는지 여부 (기본값은 true)
     serviceUrl:                # 개발시에는 다른 유레카 서버들이 필요 없으므로, 두 값을 false로 한다. (그래야 다른 유레카 서버들과 통신하려고 하지 않는다.)
-      defaultZone: http://{eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   
   # 유레카 서버는 서비스 인스턴스(유레카 서버의 클라이언트)가 자신을 등록하고, 등록 갱신 요청을 30초마다 전송하기를 기대한다.
   # 일반적으로 세번의 갱신 기간(90초)동안 서비스 인스턴스로부터 등록 갱신 요청을 받지 못하면 해당 서비스 인스턴스의 등록을 취소한다.
