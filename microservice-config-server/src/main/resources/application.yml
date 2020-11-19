@@ -9,14 +9,55 @@ spring:       # 구성 서버가 클라이언트에 제공하는 구성 속성�
       server:
         git:
           uri: https://github.com/inwoox/Spring_TacoDesign_Config
+          order: 2
           #search-paths: config      # 하위 경로
           #default-label: sidework   # sidework 브랜치의 구성 속성을 가져온다.
           #username: aaa             # 백엔드 Git 리포지토리의 인증 정보 설정
           #password: bbb 
+        
+        #encrypt:   / 이렇게하면 구성 서버는 암호화된 속성 값을 비롯해, 모든 속성 값을 Git Repo에 설정된 그대로 제공한다.
+        #  enabled: false
+        
+        vault:
+          host: localhost # vault의 API를 https://localhost:8200에서 사용할 수 있다는 것을 구성 서버에 알려준다.
+          port: 8200
+          scheme: http
+          order: 1         # vault가 제공하는 구성 속성이 Git이 제공하는 구성 속성보다 우선한다는 것을 나타낸다. 
+  
+  # 구성 서버의 백엔드로, Git과 vault를 사용한다는 것을 프로파일에 명시한다.
+  # 이렇게 하고, 보안에 민감한 구성 속성은 vault에만 쓰고, 그렇지 않은 구성은 Git 백엔드를 계속 사용하면 된다.
+  profiles:
+    active:
+      - vault
+      - git
           
 
 # 구성 서버가 가져올 속성을 준비하는 방법은 여러가지가 있지만,
 # 가장 기본적이고 쉬운 방법으로, Git 리포지토리의 루트 경로로 application.yml 등을 PUSH하는 방법이 있다.
 
-# 호출할 때는 curl localhost:8888/someapp/comeconfig 형태로 호출한다.
+# 호출할 때는 curl localhost:8888/someapp/someconfig 형태로 호출하면, Git Repo에 있는 application.yml의 내용을 가져올 수 있다.
 # 값을 사용하기 위해서는 Client 쪽에서 Properties를 이용해 값을 사용한다.
+
+
+
+
+# Git Repo 이외에 구성 서버 백엔드로, vault라는 해시코프의 보안 관리 도구를 사용할 수 있다.
+
+# brew를 통해 설치, 
+# vault server -dev -dev-root-token-id=roottoken  /  vault 서버 개발 모드로 실행
+# export VAULT_ADDR='http://127.0.0.1:8200'       /  vault 명령에서 vault 서버의 위치를 알 수 있도록, 환경 변수 설정
+# vault status                                    /  명령이 제대로 수행되어 vault 서버가 실행 중인지 확인
+
+# vault secrets disable secret                    /  구성 서버와 호환되는 secret이라는 이름의 vault 백엔드를 다시 생성한다
+# vault secrets enable -path=secret kv
+
+# vault 서버에 보안 데이터 쓰기 (이때 username을 쓸 때, password가 지워지므로, 데이터를 쓸 때는 필요한 속성을 모두 다 써야한다)
+# vault write secret/application spring.data.mongodb.password=genesis32  / secret이라는 백엔드에, application이라는 애플리케이션에 적용되는 값 쓰기
+# vault write secret/application,production spring.data.data=12345       / application 애플리케이션의 production 프로파일에 적용되는 값 쓰기
+
+# vault read secret/application                                          / 저장된 구성 데이터 확인
+
+
+# curl을 클라이언트로 사용해서 vault와 Git Repo의 보안 정보를 한번에 가져올 수 있다.
+# 구성 서버 클라이언트에도 vault 토큰을 설정해주어야, 클라이언트 실행시 구성 속성을 가져올 수 있다.
+# curl localhost:8888/application/default -H"X-Config-Token: roottoken" | jq

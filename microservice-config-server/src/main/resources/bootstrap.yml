@@ -1,0 +1,48 @@
+
+# bootstrap.yml에 설정하면, 자동 구성이 구성 서버를 활성화시키기 전에, 이 설정들이 로드 되어 사용 된다.
+
+
+# 대칭키를 통한 암호화
+# curl localhost:8888/encrypt -d "암호화할 문자열" , encrypt 엔드포인트 호출하여 암호화
+#encrypt:
+#  key: genesis32
+
+
+# 한쌍의 비대칭 RSA 키 / 키스토어 참조를 통한 암호화
+# 아래와 같이 keystore.jks 파일을 만들고, classpath(/resources)에 위치시킨 후, encrypt 엔드포인트를 호출해 암호화한다.
+# keytool -genkeypair -alias tacokey -keyalg RSA -dname "CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US" \
+# -keypass genesis32 -keystore keystore.jks -storepass genesis32
+encrypt:
+  key-store:
+    alias: tacokey
+    location: classpath:/keystore.jks
+    password: genesis32  # storepass
+    secret: genesis32    # keypass
+    
+    
+
+# 암호화된 값을 사용할 때는, encrypt 엔드포인트를 호출하고 나온 값을 아래와 같이 적용한다.
+# {cipher}는 해당 값이 암호화된 값이라는 것을 구성 서버에 알려주는 것이다.
+# 이런 형태로 암호화된 값을 Git Repo의 application.yml 등에 적용하면, curl 등으로 호출시에는 복호화된 값으로 가져온다.
+
+# spring:
+#   data:
+#     mongodb:
+#       password: '{cipher}2893591845901845901adklrjaklerj134...'
+
+
+
+# Git Repo 이외에 구성 서버 백엔드로, vault라는 해시코프의 보안 관리 도구를 사용할 수 있다.
+
+# brew를 통해 설치, 
+# vault server -dev -dev-root-token-id=roottoken  /  vault 서버 개발 모드로 실행
+# export VAULT_ADDR='http://127.0.0.1:8200'       /  vault 명령에서 vault 서버의 위치를 알 수 있도록, 환경 변수 설정
+# vault status                                    /  명령이 제대로 수행되어 vault 서버가 실행 중인지 확인
+
+# vault secrets disable secret                    /  구성 서버와 호환되는 secret이라는 이름의 vault 백엔드를 다시 생성한다
+# vault secrets enable -path=secret kv
+
+# vault 서버에 보안 데이터 쓰기 (이때 username을 쓸 때, password가 지워지므로, 데이터를 쓸 때는 필요한 속성을 모두 다 써야한다)
+# vault write secret/application spring.data.mongodb.password=genesis32  / secret이라는 백엔드에, application이라는 경로에 값 쓰기
+
+# vault read secret/application                                          / 저장된 구성 데이터 확인

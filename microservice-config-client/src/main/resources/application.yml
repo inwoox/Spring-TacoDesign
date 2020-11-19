@@ -9,8 +9,7 @@ spring:
   application:
     name: config-client
   
-  # 또한 GitRepo에 application-production.yml 형태로, 프로파일에 특정된 구성이 있을 경우에도, 
-  # 공통 속성인 application.yml보다 우선하여 가져온다.
+  # 또한 GitRepo에 application-production.yml 처럼 프로파일에 특정된 구성이, 공통 속성인 application.yml보다 우선
   # config-client-dev.yml처럼 , 애플리케이션과 프로파일 모두에 특정된 구성도 있을 수 있다.
   
   # 특히 properties보다 yaml 파일을 사용하면, 3개의 하이픈(---)과 spring.profiles를 통해,
@@ -21,6 +20,7 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
+      token: roottoken   # 지정된 토큰 값을 구성 서버에 대한 모든 요청에 포함하라고 구성 서버 클라이언트에 알려준다. (vault 토큰)
 
 
 #management:
