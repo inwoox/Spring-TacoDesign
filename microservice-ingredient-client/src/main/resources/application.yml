@@ -1,3 +1,21 @@
 spring:
   application:
     name: ingredient-client
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+      
+      
+
+# 서킷 브레이커로 보호되는 메서드가 매번 호출될 때마다 해당 호출에 관한 여러 데이터가 수집되어 Hystrix 스트림으로 발행된다.
+# 이 스트림은 실행 중인 애플리케이션의 건강 상태를 실시간으로 모니터링하는데 사용할 수 있다.
+# Hystrix 스트림은 다음 내용을 포함한다 (메서드가 몇번 호출 되는지, 몇번 성공하는지, 폴백 메서드가 몇번 호출 되는지, 메서드가 몇번 타임아웃 되는지)
+# 이 스트림은 액추에이터 엔드포인트로 제공되므로, 의존성을 추가하고, 아래와 같이 Hystrix 스트림 엔드포인트를 활성화한다.
+# 어떤 REST 클라이언트를 사용해도 Hystrix 스트림을 소비할 수 있으나, Hystrix 대시보드를 사용하는 것이 좋다.
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
