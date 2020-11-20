@@ -51,7 +51,7 @@ public class OrderApiController {
 	@PostMapping(consumes="application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Order postOrder(@RequestBody Order order) {
-	  //orderMessages.sendOrder(order);  // 메시징으로 통신
+	  orderMessages.sendOrder(order);  // 메시징으로 통신
 	  return orderRepo.save(order);
 	}
 	

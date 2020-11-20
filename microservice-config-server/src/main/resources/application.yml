@@ -8,8 +8,8 @@ spring:       # 구성 서버가 클라이언트에 제공하는 구성 속성�
     config:
       server:
         git:
-          uri: http://localhost:10080/tacocloud/tacocloud-config # 로컬 Repo gogs  # https://github.com/inwoox/Spring_TacoDesign_Config
-          order: 2
+          uri: http://localhost:10080/gogs/taco-config # 로컬 Repo gogs  # https://github.com/inwoox/Spring_TacoDesign_Config
+          order: 1
           #search-paths: config      # 하위 경로
           #default-label: sidework   # sidework 브랜치의 구성 속성을 가져온다.
           #username: aaa             # 백엔드 Git 리포지토리의 인증 정보 설정
@@ -22,15 +22,19 @@ spring:       # 구성 서버가 클라이언트에 제공하는 구성 속성�
           host: localhost # vault의 API를 http://localhost:8200에서 사용할 수 있다는 것을 구성 서버에 알려준다.
           port: 8200
           scheme: http
-          order: 1         # vault가 제공하는 구성 속성이 Git이 제공하는 구성 속성보다 우선한다는 것을 나타낸다. 
+          order: 2         # vault가 제공하는 구성 속성이 Git이 제공하는 구성 속성보다 우선한다는 것을 나타낸다. 
   
   # 구성 서버의 백엔드로, Git과 vault를 사용한다는 것을 프로파일에 명시한다.
   # 이렇게 하고, 보안에 민감한 구성 속성은 vault에만 쓰고, 그렇지 않은 구성은 Git 백엔드를 계속 사용하면 된다.
   profiles:
     active:
-      - vault
       - git
-          
+      - vault
+      
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+              
 
 # 구성 서버가 가져올 속성을 준비하는 방법은 여러가지가 있지만,
 # 가장 기본적이고 쉬운 방법으로, Git 리포지토리의 루트 경로로 application.yml 등을 PUSH하는 방법이 있다.

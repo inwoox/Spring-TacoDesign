@@ -16,13 +16,13 @@ spring:
     bootstrap-servers:
     - localhost:9092
     template:
-      default-topic: tacocloud.orders.topic
+      default-topic: Topic1
     consumer:
       key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     producer:
       key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer    
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 ---
 # None of these properties will actually work as configured for this profile.
 # But it is left here as an example of configuring for a production profile

@@ -33,7 +33,7 @@ public class KafkaOrderMessagingService implements OrderMessagingService {
 	// 매개변수 - 메시지가 전송될 토픽 (필수), 토픽 데이터를 쓰는 파티션 (선택), 레코드 전송 키 (선택), 타임스탬프 (선택), 페이로드 (예 : Order 객체) (필수)
 	@Override
 	public void sendOrder(Order order) {
-		kafkaTemplate.send("tacocloud.orders.topic", order);
+		kafkaTemplate.send("Topic1", order);
 	}
 	
 	// 구성 속성으로, 기본 토픽을 설정하면, 이렇게 토픽 이름을 생략하고 전송할 수 있다.

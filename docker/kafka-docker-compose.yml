@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+  kafka:
+    image: wurstmeister/kafka
+    restart: always
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      # Topic 1 will have 1 partition and 1 replicas
+      KAFKA_CREATE_TOPICS: "Topic1:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: host.docker.internal:2181
+    volumes:
+      - /Users/a/Documents/dockershare:/var/run/docker.sock
+# 분산처리를 지원하는 주키퍼 컨테이너를 실행하고 나서 아래와 같이 카프카를 실행한다.
+# docker-compose -f kafka-docker-compose.yml up

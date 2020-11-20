@@ -25,7 +25,7 @@ spring:
     bootstrap-servers:
     - localhost:9092
     template:
-      default-topic: tacocloud.orders.topic
+      default-topic: Topic1
     consumer:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: tacocloud_kitchen

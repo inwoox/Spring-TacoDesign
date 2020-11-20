@@ -32,6 +32,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-kafka</artifactId>
+		</dependency>
 		<!--  이 의존성을 추가하고 애플리케이션을 실행하면, 자동 구성이 실행 되어 구성서버로부터 속성들을 가져오는 속성 소스를 등록한다.  -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

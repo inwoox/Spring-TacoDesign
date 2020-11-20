@@ -19,11 +19,5 @@ spring:
   # 구성 서버의 위치를 지정하는 uri (설정하지 않으면, 기본적으로 자동 구성은 localhost:8888에서 서버가 실행 중인 것으로 간주)
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: http://localhost:8888  
 
-
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: '*'

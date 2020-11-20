@@ -7,5 +7,6 @@ import org.springframework.hateoas.CollectionModel;
 
 public class TacoModels extends CollectionModel<TacoModel> {
   public TacoModels(List<TacoModel> tacoModels) {
+	  super(tacoModels);
   }
 }

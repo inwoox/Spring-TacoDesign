@@ -5,7 +5,7 @@ spring:
     bootstrap-servers:    # 카프카 클러스터로의 초기 연결에 사용되는 하나 이상의 카프카 서버들의 위치
     - localhost:9092      # 클러스터의 카프카 서버 중 하나가 localhost에서 실행되고, 9092 포트를 리스닝한다면, 이와 같이 설정한다. (Kafka Cluster의 Broker 주소를 (host:port) 형식으로 넣어준다)
     template:
-      default-topic: tacocloud.orders.topic
+      default-topic: Topic1 # tacocloud.orders.topic
     producer:
       keySerializer: org.springframework.kafka.support.serializer.JsonSerializer    # 메시지의 Key를 직렬화 할 수 있는 Serializer 클래스
       valueSerializer: org.springframework.kafka.support.serializer.JsonSerializer  # 메시지의 Value를 직렬화 할 수 있는 Serializer 클래스
