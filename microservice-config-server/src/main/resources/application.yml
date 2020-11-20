@@ -8,7 +8,7 @@ spring:       # 구성 서버가 클라이언트에 제공하는 구성 속성�
     config:
       server:
         git:
-          uri: https://github.com/inwoox/Spring_TacoDesign_Config
+          uri: http://localhost:10080/tacocloud/tacocloud-config # 로컬 Repo gogs  # https://github.com/inwoox/Spring_TacoDesign_Config
           order: 2
           #search-paths: config      # 하위 경로
           #default-label: sidework   # sidework 브랜치의 구성 속성을 가져온다.
@@ -19,7 +19,7 @@ spring:       # 구성 서버가 클라이언트에 제공하는 구성 속성�
         #  enabled: false
         
         vault:
-          host: localhost # vault의 API를 https://localhost:8200에서 사용할 수 있다는 것을 구성 서버에 알려준다.
+          host: localhost # vault의 API를 http://localhost:8200에서 사용할 수 있다는 것을 구성 서버에 알려준다.
           port: 8200
           scheme: http
           order: 1         # vault가 제공하는 구성 속성이 Git이 제공하는 구성 속성보다 우선한다는 것을 나타낸다. 

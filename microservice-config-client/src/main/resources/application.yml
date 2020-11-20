@@ -20,7 +20,6 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-      token: roottoken   # 지정된 토큰 값을 구성 서버에 대한 모든 요청에 포함하라고 구성 서버 클라이언트에 알려준다. (vault 토큰)
 
 
 #management:

@@ -32,17 +32,3 @@ encrypt:
 
 
 
-# Git Repo 이외에 구성 서버 백엔드로, vault라는 해시코프의 보안 관리 도구를 사용할 수 있다.
-
-# brew를 통해 설치, 
-# vault server -dev -dev-root-token-id=roottoken  /  vault 서버 개발 모드로 실행
-# export VAULT_ADDR='http://127.0.0.1:8200'       /  vault 명령에서 vault 서버의 위치를 알 수 있도록, 환경 변수 설정
-# vault status                                    /  명령이 제대로 수행되어 vault 서버가 실행 중인지 확인
-
-# vault secrets disable secret                    /  구성 서버와 호환되는 secret이라는 이름의 vault 백엔드를 다시 생성한다
-# vault secrets enable -path=secret kv
-
-# vault 서버에 보안 데이터 쓰기 (이때 username을 쓸 때, password가 지워지므로, 데이터를 쓸 때는 필요한 속성을 모두 다 써야한다)
-# vault write secret/application spring.data.mongodb.password=genesis32  / secret이라는 백엔드에, application이라는 경로에 값 쓰기
-
-# vault read secret/application                                          / 저장된 구성 데이터 확인
