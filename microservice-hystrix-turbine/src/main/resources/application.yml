@@ -1,0 +1,18 @@
+server:
+  port: 8989    # 개발 시에는 다른 서비스들과 함께 로컬에서 실행하므로, 포트 충돌 방지를 위해 고유 포트를 선택
+
+
+# Turbine은 유레카의 클라이언트로 작동하며, Hystrix 스트림을 종합할 서비스들을 유레카에서 찾는다.
+# 따라서 어떤 서비스들을 종합할지 지정해야한다. 
+turbine:
+  app-config: ingredient-service, ingredient-client    
+  cluster-name-expression: "'default'"   # 이것은 이름이 default인 클러스터에 있는 모든 종합될 스트림을, Turbine이 수집해야한다는 것을 나타낸다.
+                                         # 이것을 설정하지 않으면, 어떤 스트림 데이터도 Turbine 스트림에 포함되지 않는다. 
+  
+  
+
+# NetFlix Turbine 서버를 실행하기 위해서는, 
+# 유레카 서비스 레지스트리 (유레카 서버), 그리고 위에서 지정한 스트림을 종합할 서비스 (2개), 종합한 Turbine 스트림을 볼 수 있는 Hystrix 대시보드 서비스를 실행해야한다.
+# 그리고 대시보드에서 http://localhost:8989/turbine.stream 스트림을 모니터링한다.
+
+# 단일 서비스의 스트림을 확인하기 위해서는 http://localhost:(서비스의 리스닝포트)/actuator/hystrix.stream 스트림을 모니터링한다.

@@ -6,3 +6,11 @@ server:
 hystrix:
   dashboard:
     proxy-stream-allow-list: '*'
+    
+    
+# Hystrix 대시보드는 한 번에 하나의 Hystrix 스트림만 모니터링할 수 있다. 
+# 애플리케이션에 있는 마이크로서비스의 인스턴스는 자신의 Hystrix 스트림만을 발행하므로 어플리케이션 전체의 건강 정보를 얻는 것은 불가능하다.
+
+# 하지만 또 다른 Netflix 프로젝트인 Turbine이 모든 마이크로서비스로부터 모든 Hystrix 스트림을 
+# Hystrix 대시보드가 모니터링할 수 있는 하나의 스트림으로 종합하는 방법을 제공한다.
+# Turbine 서비스를 생성하려면 새로운 스프링 부트 프로젝트르 생성하고, Turbine 스타터 의존성을 추가한다.

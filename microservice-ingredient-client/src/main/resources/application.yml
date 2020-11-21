@@ -14,8 +14,69 @@ spring:
 # 이 스트림은 액추에이터 엔드포인트로 제공되므로, 의존성을 추가하고, 아래와 같이 Hystrix 스트림 엔드포인트를 활성화한다.
 # 어떤 REST 클라이언트를 사용해도 Hystrix 스트림을 소비할 수 있으나, Hystrix 대시보드를 사용하는 것이 좋다.
 
+
+
+
 management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: '*'  # 액추에이터 의존성을 추가하고, 이렇게 하면, health, info 등 모든 액추에이터 엔드포인트를 추가할 수 있다.
+        # exclude: threaddump, heapdump
+      # base-path: /manage - 액추에이터의 기본 경로를 /actuator에서 /manage로 바꿀 수 있다. 
+  
+  
+  # health 엔드포인트의 모든 건강 지표의 상세 내역을 볼 수 있도록 설정 (스프링 부트에서는 다른 외부 DB와 시스템의 건강 지표들도 제공한다)
+  endpoint:
+    health:
+      show-details: always
+      
+  info:
+    git:
+      mode: full  # 플러그인 추가 후, 이 옵션을 설정하면, 매우 상세한 Git 정보를 얻을 수 있다.
+      
+
+# 아래와 같이 설정하면 /actuator/info 엔드포인트로 정보를 조회할 수 있다.
+info:
+  contact:
+    email: inwoox@gmail.com
+   
+# 또한 예를 들어 InfoContributor를 구현하는 클래스를 정의하여, info 엔드포인트 호출시 동적으로 값을 받아올 수 있다.
+# 스프링부트에서는 /info 응답에 자동으로 정보를 추가해주는, 몇가지 InfoContributor 구현체가 포함되어 있다.
+# 이 중에 BuildInfoContributor가 있는데, 이것은 프로젝트 빌드 파일의 정보를 /info 응답에 추가해준다.
+# /info 응답에 빌드 정보를 활성화하려면, build-info goal을 spring-boot-maven-plugin에 추가한다.
+
+# 또한 Git 커밋 정보를 /info 엔드포인트에 추가하려면, git-commit-id-plugin 플러그인을 추가한다.
+
+
+
+# /actuator/env                        - 환경 속성, 구성 속성 확인
+# /actuator/env/local.server.port | jq - 지정된 속성들만 추가 정보를 확인할 수 있다.
+
+# /actuator/metrics                                      - 여러 메트릭을 확인
+# /actuator/metrics/http.server.requests                 - 서버가 처리한 요청들을 확인
+# /actuator/metrics/http.server.requests?tag=status:404  - 404 응답을 유발한 요청이 몇개인지 확인
+
+# /actuator/mappings  - 모든 HTTP 요청 핸들러 확인 
+# /actuator/loggers   - 모든 로깅 레벨 확인
+
+# 엔드포인트를 통해 읽는 것은 물론, 쓰거나 삭제할 수도 있다.
+# 커스텀 건강 지표를 정의하거나, 커스텀 메트릭, 커스텀 엔드포인트를 생성할 수도 있다.
+# 액추에이터는 스프링 시큐리티 등을 통해 적절하게 보안 처리를 해야한다.
+
+
+
+
+
+        
+# 어떤 메서드가 자신의 일을 수행하는데 너무 오랜 시간이 걸리는 경우 (다른 서비스에 HTTP 요청을 하고 있는데 해당 서비스의 응답이 느릴 경우)
+# 이런 경우에 해당 서비스가 응답할 때까지 Hystrix는 응답을 기다리면서 관련 스레드를 블로킹한다.
+
+# 만일 그런 메서드가 호출자와 같은 스레드의 컨텍스트에서 실행 중이라면 호출자는 오래 실행되는 메서드로부터 벗어날 기회가 없다.
+# 게다가 블로킹된 스레드가 제한된 수의 스레드 중 하나인데 문제가 계속 생긴다면, 사용 가능한 모든 스레드가 포화 상태가 되어 응답을 기다리게 된다.
+
+# 이런 상황을 방지하기 위해 Hystrix는 각 의존성 모듈의 스레드 풀을 할당한다. (하나 이상의 Hystrix 명령 메서드를 갖는 각 스프링 빈을 위해)
+# 그리고 Hystrix 명령 메서드 중 하나가 호출될 때 이 메서드는 Hystrix가 관리하는 스레드 풀의 스레드에서 실행 된다.
+
+# 따라서, 호출 스레드와 별개의 스레드에서 실행되기 때문에, 오래 걸린다면 호출 스레드는 해당 호출 포기하고 벗어날 수 있으므로
+# 잠재적인 스레드 포화를 Hystrix가 관리하는 스레드 풀에 고립시킬 수 있다.
