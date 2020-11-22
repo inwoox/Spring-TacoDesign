@@ -1,0 +1,29 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: Spring Boot Admin Server
+  security:
+    user:
+      name: admin
+      password: genesis32
+      
+
+eureka:
+  client:
+    service-url:                # 유레카 서버가 기본 포트와 호스트에서 리스닝하지 않을 경우, 서버에 대한 정보를 꼭 기재해야한다.
+      defaultZone: http://localhost:8761/eureka/, http://eureka1.tacocloud.com:8761/eureka/
+    register-with-eureka: false # false일 경우, admin 서버가 유레카 클라이언트가 아니라, 유레카에 서비스로 등록한다.
+    
+   
+    
+
+# Admin 서버는 다른 스프링 부트 애플리케이션의 액추에이터 데이터를 보여주는 별개의 애플리케이션이므로
+# 다른 어플리케이션을 Admin 서버가 알 수 있도록 클라이언트로 등록해야한다.
+
+# 두가지 방법으로 클라이언트를 서버에 등록한다.
+
+# 각 애플리케이션이 자신을 Admin 서버에 등록한다. (csrf를 비활성화하고, 클라이언트를 등록하게끔 application.yml을 작성)
+# Admin 서버가 유레카 서비스 레지스트리를 통해서 서비스를 찾는다.
+# (서버에는 유레카 클라이언트 의존성 추가 / 클라이언트에는 유레카 클라이언트와 액추에이터 의존성을 추가해야한다)
