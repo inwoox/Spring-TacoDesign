@@ -30,13 +30,14 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
                 .logout().logoutUrl(adminContextPath + "/logout").and()
-                .httpBasic().and()
-                .csrf()		// 아래 경로에는, csrf를 비활성화해야 클라이언트를 서버에 등록할 수 있다.
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .ignoringAntMatchers(
-                        adminContextPath + "/instances",
-                        adminContextPath + "/actuator/**"
-                );
+                .httpBasic();
+//                .and()
+//                .csrf()		// 아래 경로에는, csrf를 비활성화해야 클라이언트를 서버에 등록할 수 있다.
+//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                .ignoringAntMatchers(
+//                        adminContextPath + "/instances",
+//                        adminContextPath + "/actuator/**"
+//                );
         // @formatter:on
     }
 }

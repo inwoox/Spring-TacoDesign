@@ -4,7 +4,8 @@ server:
 spring:
   application:
     name: Spring Boot Admin Server
-  security:
+    
+  security:  # Admin 서버 페이지 인증 정보 / 등록하지 않으면, 로그에 무작위로 생성됨
     user:
       name: admin
       password: genesis32

@@ -1,21 +1,31 @@
 server:
   port: 18080
 
-
-# 이렇게 하지 않아도, spring-boot-admin 서버에 유레카 클라이언트 의존성을 추가하면, 알아서 서버가 유레카에 등록된 서비스들을 찾아, 서버에 등록한다.
 spring:
+  security:
+    user:
+      name: admin
+      password: genesis32
   application:
     name: boot-admin-client
-  boot:
-    admin:
-      client:
-        url: http://localhost:9090
-        username: admin
-        password: genesis32
-        instance:
-          metadata:
-            user.name: admin
-            user.password: genesis32
+
+# admin 클라이언트 수동 등록시
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:9090
+#        instance:      # admin 서버에 액추에이터 엔드포인트 인증정보 전달
+#          metadata:
+#            user.name: ${spring.security.user.name}
+#            user.password: ${spring.security.user.password}
+
+# admin 클라이언트 자동 등록시 (Admin 서버가 유레카를 통해 클라이언트를 발견하도록 한다, 이때는 클라이언트에 유레카 클라이언트 의존성과 액추에이터 의존성이 추가되어야한다.)
+eureka:
+  instance:
+    metadata-map:        # admin 서버에 액추에이터 엔드포인트 인증정보 전달
+      user.name: admin
+      user.password: genesis32
+
 
 management:
   endpoints:
